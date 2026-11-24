@@ -1,0 +1,1122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Literacy Student Exhibition | TDG-AIL Project</title>
+  <meta id="page-description" name="description" content="AI Literacy in Action: a student exhibition from the TDG-AIL Project at HKU.">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#1A3A5C; --gold:#D4A843; --paper:#F8F7F4; --ink:#2D2D2D; }
+    body { font-family:"Source Sans Pro", sans-serif; color:var(--ink); }
+    h1,h2,h3,h4,.heading { font-family:"Montserrat", sans-serif; }
+    .view { display:none; }
+    .view.active { display:block; animation:fade .24s ease-out; }
+    .nav-link.active { color:var(--navy); background:#eaf0f5; }
+    .placeholder-art { background:linear-gradient(135deg,#dce6ed,#f4efe3); position:relative; overflow:hidden; }
+    .placeholder-art:before,.placeholder-art:after { content:""; position:absolute; border:1px solid rgba(26,58,92,.24); border-radius:999px; }
+    .placeholder-art:before { width:150px;height:150px;right:-32px;top:-50px; }
+    .placeholder-art:after { width:86px;height:86px;left:18px;bottom:-35px; }
+    .focus-ring:focus-visible { outline:3px solid #D4A843; outline-offset:3px; }
+    .modal-open { overflow:hidden; }
+    @keyframes fade { from{opacity:.35; transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+    @media (prefers-reduced-motion:reduce) { *,*:before,*:after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+</head>
+<body class="w-full min-h-screen bg-[#F8F7F4]" style="background: rgb(248, 247, 244);">
+  <header class="sticky top-0 z-40 w-full border-b border-slate-200 bg-[#F8F7F4]/95 backdrop-blur">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 lg:px-8" aria-label="Primary navigation">
+      <button type="button" class="focus-ring flex items-center gap-3 text-left" onclick="switchView('home')">
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1A3A5C] text-lg font-bold text-white">AI</span>
+        <span class="heading text-sm font-bold tracking-tight text-[#1A3A5C]" style="color: rgb(26, 58, 92); font-weight: 700; font-style: normal; font-size: 16px;">TDG-AIL Project</span>
+      </button>
+      <div class="hidden items-center gap-1 md:flex">
+        <button class="nav-link focus-ring rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition" type="button" data-view="home">Home</button>
+        <button class="nav-link focus-ring rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition" type="button" data-view="about">About the Project</button>
+        <button class="nav-link focus-ring rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition" type="button" data-view="exhibition">Exhibition</button>
+        <button class="nav-link focus-ring rounded-md px-3 py-2 text-sm font-semibold text-slate-700 transition" type="button" data-view="collections">Course Collections</button>
+        <button class="nav-link focus-ring ml-1 rounded-md bg-[#D4A843] px-4 py-2 text-sm font-bold text-[#1A3A5C] transition hover:bg-[#c49832]" type="button" data-view="submit" style="background: rgb(212, 168, 67); color: rgb(26, 58, 92);">Submit</button>
+      </div>
+      <button id="menu-toggle" type="button" class="focus-ring rounded-md p-2 text-[#1A3A5C] md:hidden" aria-expanded="false" aria-controls="mobile-menu">
+        <i data-lucide="menu" aria-hidden="true"></i><span class="sr-only">Open navigation menu</span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden border-t border-slate-200 bg-[#F8F7F4] px-5 py-3 md:hidden">
+      <div class="mx-auto grid max-w-7xl gap-1">
+        <button class="mobile-nav focus-ring rounded-md px-3 py-2 text-left font-semibold text-slate-700" type="button" data-view="home">Home</button>
+        <button class="mobile-nav focus-ring rounded-md px-3 py-2 text-left font-semibold text-slate-700" type="button" data-view="about">About the Project</button>
+        <button class="mobile-nav focus-ring rounded-md px-3 py-2 text-left font-semibold text-slate-700" type="button" data-view="exhibition">Exhibition</button>
+        <button class="mobile-nav focus-ring rounded-md px-3 py-2 text-left font-semibold text-slate-700" type="button" data-view="collections">Course Collections</button>
+        <button class="mobile-nav focus-ring rounded-md px-3 py-2 text-left font-semibold text-slate-700" type="button" data-view="submit">Submit</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="view active" aria-labelledby="home-title">
+      <section class="border-b border-[#1A3A5C]" style="background: rgb(26, 58, 92);">
+        <div class="mx-auto grid max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.25fr_.75fr] lg:px-8 lg:py-24">
+          <div class="max-w-3xl">
+            <p class="mb-5 text-sm font-bold uppercase tracking-[.18em]" style="color: rgb(212, 168, 67);">HKU Teaching &amp; Learning Project</p>
+            <h1 id="home-title" class="heading mb-6 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">AI Literacy in Action: A Student Exhibition</h1>
+            <p class="max-w-2xl text-xl leading-relaxed" style="color: rgb(226, 232, 240);">Showcasing student-created multimedia works from BSc(IM) and BASC(SDS) courses at HKU.</p>
+            <button class="focus-ring mt-8 rounded-md px-6 py-3 font-bold transition hover:bg-[#e1ba60]" type="button" onclick="switchView('exhibition')" style="background: rgb(212, 168, 67); color: rgb(26, 58, 92);">Explore the Exhibition</button>
+          </div>
+          <div class="placeholder-art flex min-h-64 items-center justify-center rounded-2xl border border-white/20 shadow-2xl">
+            <div class="relative z-10 rounded-xl border bg-[#F8F7F4]/90 px-7 py-6 text-center shadow-sm" style="border-color: rgba(26,58,92,.15);">
+              <i data-lucide="sparkles" class="mx-auto mb-3 h-8 w-8" style="color:#D4A843;" aria-hidden="true"></i>
+              <p class="heading text-sm font-bold" style="color: rgb(26, 58, 92);">Student work placeholder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+        <div class="max-w-3xl">
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.16em]" style="color: rgb(26, 58, 92);">An invitation to explore</p>
+          <h2 class="heading mb-5 text-3xl font-bold" style="color: rgb(26, 58, 92);">Creative and critical AI literacy</h2>
+          <p class="text-lg leading-relaxed" style="color: rgb(51, 65, 85);">This exhibition is part of the TDG-AIL project, which develops and evaluates a new AI Literacy course for BSc(IM) and BASC(SDS) students. The works presented here demonstrate students' creative and critical engagement with AI tools, ideas, and their social implications.</p>
+        </div>
+      </section>
+      <section class="border-y border-slate-200" style="background: rgb(255, 255, 255);">
+        <div class="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+          <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p class="mb-2 text-sm font-bold uppercase tracking-[.16em]" style="color: rgb(26, 58, 92);">Selected placeholder works</p>
+              <h2 class="heading text-3xl font-bold" style="color: rgb(26, 58, 92);">Featured student work</h2>
+            </div>
+            <button class="focus-ring rounded-md border px-4 py-2 font-semibold hover:bg-[#1A3A5C] hover:text-white" type="button" onclick="switchView('exhibition')" style="border-color: rgb(26, 58, 92); background: rgb(255, 255, 255); color: rgb(26, 58, 92);">View all works</button>
+          </div>
+          <div class="flex snap-x gap-5 overflow-x-auto pb-4" aria-label="Featured placeholder student works">
+            <article class="min-w-[250px] snap-start overflow-hidden rounded-xl border border-slate-200 bg-[#F8F7F4] shadow-sm sm:min-w-[285px]" data-feature-work="2" tabindex="0" role="button" aria-label="Open featured work in Exhibition">
+              <div class="placeholder-art h-36"></div>
+              <div class="p-5">
+                <span class="rounded px-2 py-1 text-xs font-bold" style="background: rgb(230, 237, 243); color: rgb(26, 58, 92);">BSIM3021</span>
+                <h3 class="heading mt-3 font-bold" style="color: rgb(26, 58, 92);">Mapping Everyday AI</h3>
+              </div>
+            </article>
+            <article class="min-w-[250px] snap-start overflow-hidden rounded-xl border border-slate-200 bg-[#F8F7F4] shadow-sm sm:min-w-[285px]" data-feature-work="3" tabindex="0" role="button" aria-label="Open featured work in Exhibition">
+              <div class="placeholder-art h-36"></div>
+              <div class="p-5">
+                <span class="rounded px-2 py-1 text-xs font-bold" style="background: rgb(230, 237, 243); color: rgb(26, 58, 92);">BSIM3025</span>
+                <h3 class="heading mt-3 font-bold" style="color: rgb(26, 58, 92);">Data Stories in Motion</h3>
+              </div>
+            </article>
+            <article class="min-w-[250px] snap-start overflow-hidden rounded-xl border border-slate-200 bg-[#F8F7F4] shadow-sm sm:min-w-[285px]" data-feature-work="3" tabindex="0" role="button" aria-label="Open featured work in Exhibition">
+              <div class="placeholder-art h-36"></div>
+              <div class="p-5">
+                <span class="rounded px-2 py-1 text-xs font-bold" style="background: rgb(230, 237, 243); color: rgb(26, 58, 92);">BSIM4019</span>
+                <h3 class="heading mt-3 font-bold" style="color: rgb(26, 58, 92);">The Bias Lens</h3>
+              </div>
+            </article>
+            <article class="min-w-[250px] snap-start overflow-hidden rounded-xl border border-slate-200 bg-[#F8F7F4] shadow-sm sm:min-w-[285px]">
+              <div class="placeholder-art h-36"></div>
+              <div class="p-5">
+                <span class="rounded px-2 py-1 text-xs font-bold" style="background: rgb(230, 237, 243); color: rgb(26, 58, 92);">AILT9008</span>
+                <h3 class="heading mt-3 font-bold" style="color: rgb(26, 58, 92);">Human in the Loop</h3>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+        <p class="mb-5 text-sm italic text-slate-500">Placeholder figures for exhibition planning.</p>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"><p class="heading text-3xl font-bold" style="color: rgb(26, 58, 92);">5</p><p class="mt-1 text-slate-600">Courses</p></div>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"><p class="heading text-3xl font-bold" style="color: rgb(26, 58, 92);">999+</p><p class="mt-1 text-slate-600">Student Works</p></div>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"><p class="heading text-3xl font-bold" style="color: rgb(26, 58, 92);">3</p><p class="mt-1 text-slate-600">Semesters</p></div>
+          <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm"><p class="heading text-3xl font-bold" style="color: rgb(26, 58, 92);">1</p><p class="mt-1 text-slate-600">Project</p></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="view" aria-labelledby="about-title">
+      <section style="background: rgb(26, 58, 92);">
+        <div class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-20">
+          <p class="mb-4 text-sm font-bold uppercase tracking-[.16em]" style="color: rgb(212, 168, 67);">TDG-AIL at HKU</p>
+          <h1 id="about-title" class="heading text-4xl font-bold text-white sm:text-5xl">About the TDG-AIL Project</h1>
+          <p class="mt-5 max-w-3xl text-xl leading-relaxed" style="color: rgb(226, 232, 240);">Developing discipline-specific approaches to AI literacy for students at HKU.</p>
+        </div>
+      </section>
+      <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+        <div class="grid gap-12 lg:grid-cols-[1.2fr_.8fr]">
+          <div>
+            <h2 class="heading mb-5 text-3xl font-bold" style="color: rgb(26, 58, 92);">Project overview</h2>
+            <p class="text-lg leading-relaxed" style="color: rgb(51, 65, 85);">The TDG-AIL project aims to develop curriculum materials and assessment instruments for a new discipline-specific AI Literacy course, and to evaluate its effectiveness in improving students' AI literacy. The project is designed for BSc(IM) and BASC(SDS) students at HKU, supporting informed, ethical, and creative engagement with AI in their studies and future work.</p>
+          </div>
+          <aside class="rounded-xl border border-slate-200 bg-white p-7 shadow-sm">
+            <h2 class="heading mb-5 text-2xl font-bold" style="color: rgb(26, 58, 92);">People</h2>
+            <ul class="space-y-4">
+              <li class="border-l-4 pl-4" style="border-color: rgb(212, 168, 67); color: rgb(51, 65, 85); font-weight: 600;">Project Leader: Dr. Jeremy Ng.</li>
+              <li class="border-l-4 pl-4" style="border-color: rgb(212, 168, 67); color: rgb(51, 65, 85); font-weight: 600;">Collaborator: Prof. Shihui Feng.</li>
+              <li class="border-l-4 pl-4" style="border-color: rgb(212, 168, 67); color: rgb(51, 65, 85); font-weight: 600;">Student Co-Investigators: Timothy Tang, Clinton Chan, Kenny Chow, and Ngai Poon.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+      <section class="border-y border-slate-200" style="background: rgb(255, 255, 255);">
+        <div class="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+          <h2 class="heading mb-8 text-3xl font-bold" style="color: rgb(26, 58, 92);">Project deliverables</h2>
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="rounded-lg border border-slate-200 p-5 font-semibold" style="background: rgb(248, 247, 244); color: rgb(26, 58, 92);">Curriculum materials</div>
+            <div class="rounded-lg border border-slate-200 p-5 font-semibold" style="background: rgb(248, 247, 244); color: rgb(26, 58, 92);">Assessment rubrics</div>
+            <div class="rounded-lg border border-slate-200 p-5 font-semibold" style="background: rgb(248, 247, 244); color: rgb(26, 58, 92);">Guest lecture</div>
+            <div class="rounded-lg border border-slate-200 p-5 font-semibold" style="background: rgb(248, 247, 244); color: rgb(26, 58, 92);">TALIC seminar</div>
+            <div class="rounded-lg border border-slate-200 p-5 font-semibold" style="background: rgb(248, 247, 244); color: rgb(26, 58, 92);">Practice brief</div>
+            <div class="rounded-lg border border-slate-200 p-5 font-semibold" style="background: rgb(248, 247, 244); color: rgb(26, 58, 92);">This Online Exhibition</div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- EXHIBITION -->
+    <section id="exhibition" class="view" aria-labelledby="exhibition-title">
+      <section style="background: rgb(26, 58, 92);">
+        <div class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-20">
+          <p class="mb-4 text-sm font-bold uppercase tracking-[.16em]" style="color: rgb(212, 168, 67);">Placeholder collection</p>
+          <h1 id="exhibition-title" class="heading text-4xl font-bold text-white sm:text-5xl">Student Exhibition</h1>
+          <p class="mt-5 max-w-3xl text-xl leading-relaxed" style="color: rgb(226, 232, 240);">Browse student-created multimedia works from AI Literacy and related courses.</p>
+        </div>
+      </section>
+      <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
+        <form id="filter-form" class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" aria-label="Filter exhibition works">
+          <div class="grid gap-5 md:grid-cols-3">
+            <div><label class="mb-2 block font-bold" for="course-filter" style="color: rgb(26, 58, 92);">Course</label>
+              <select id="course-filter" class="focus-ring w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800">
+                <option>All Courses</option><option>BSIM3021</option><option>BSIM3025</option><option>BSIM4019</option><option>CCCH9051</option><option>AILT9008</option>
+              </select>
+            </div>
+            <div><label class="mb-2 block font-bold" for="type-filter" style="color: rgb(26, 58, 92);">Artefact Type</label>
+              <select id="type-filter" class="focus-ring w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800">
+                <option>All Types</option><option>Website</option><option>Video</option><option>Poster</option><option>Multimedia</option>
+              </select>
+            </div>
+            <div><label class="mb-2 block font-bold" for="semester-filter" style="color: rgb(26, 58, 92);">Semester</label>
+              <select id="semester-filter" class="focus-ring w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-800">
+                <option>All Semesters</option><option>2024/25</option><option>2025/26</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <p id="result-count" class="font-semibold text-slate-600" aria-live="polite"></p>
+            <button class="focus-ring rounded-md border px-4 py-2 text-sm font-bold hover:bg-[#1A3A5C] hover:text-white" type="button" id="reset-filters-button" style="border-color: rgb(26, 58, 92); background: rgb(255, 255, 255); color: rgb(26, 58, 92);">Reset filters</button>
+          </div>
+        </form>
+        <div id="gallery" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
+        <div id="empty-state" class="hidden py-16 text-center">
+          <i data-lucide="search-x" class="mx-auto mb-4 h-10 w-10" style="color:#D4A843;" aria-hidden="true"></i>
+          <p class="text-lg font-semibold text-slate-600">No works match your filters. Try adjusting your selection.</p>
+        </div>
+        <div class="mt-9 text-center"><button id="load-more" class="focus-ring rounded-md px-6 py-3 font-bold hover:bg-[#e1ba60]" type="button" style="background: rgb(212, 168, 67); color: rgb(26, 58, 92);">Load More</button></div>
+      </section>
+    </section>
+
+    <!-- COLLECTIONS -->
+    <section id="collections" class="view" aria-labelledby="collections-title">
+      <section style="background: rgb(26, 58, 92);">
+        <div class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-20">
+          <p class="mb-4 text-sm font-bold uppercase tracking-[.16em]" style="color: rgb(212, 168, 67);">Browse by subject</p>
+          <h1 id="collections-title" class="heading text-4xl font-bold text-white sm:text-5xl">Course Collections</h1>
+          <p class="mt-5 text-xl" style="color: rgb(226, 232, 240);">Explore student works organised by course.</p>
+        </div>
+      </section>
+      <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="placeholder-art h-36"></div>
+            <div class="p-6">
+              <h2 class="heading text-xl font-bold" style="color: rgb(26, 58, 92);">BSIM3021 — Websites</h2>
+              <p class="mt-3 min-h-16 text-slate-600">Placeholder websites that apply AI literacy concepts through interactive digital design.</p>
+              <button class="focus-ring mt-5 rounded-md px-4 py-2 font-bold text-white hover:bg-[#254e78]" type="button" data-course="BSIM3021" style="background: rgb(26, 58, 92);">View Collection</button>
+            </div>
+          </article>
+          <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="placeholder-art h-36"></div>
+            <div class="p-6">
+              <h2 class="heading text-xl font-bold" style="color: rgb(26, 58, 92);">BSIM3025 — Multimedia Artefacts</h2>
+              <p class="mt-3 min-h-16 text-slate-600">Placeholder multimedia projects exploring AI ideas through mixed formats and storytelling.</p>
+              <button class="focus-ring mt-5 rounded-md px-4 py-2 font-bold text-white hover:bg-[#254e78]" type="button" data-course="BSIM3025" style="background: rgb(26, 58, 92);">View Collection</button>
+            </div>
+          </article>
+          <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="placeholder-art h-36"></div>
+            <div class="p-6">
+              <h2 class="heading text-xl font-bold" style="color: rgb(26, 58, 92);">BSIM4019 — Posters &amp; Multimedia</h2>
+              <p class="mt-3 min-h-16 text-slate-600">Placeholder visual communication works on critical and ethical questions in AI.</p>
+              <button class="focus-ring mt-5 rounded-md px-4 py-2 font-bold text-white hover:bg-[#254e78]" type="button" data-course="BSIM4019" style="background: rgb(26, 58, 92);">View Collection</button>
+            </div>
+          </article>
+          <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="placeholder-art h-36"></div>
+            <div class="p-6">
+              <h2 class="heading text-xl font-bold" style="color: rgb(26, 58, 92);">CCCH9051 — VR Product Gallery</h2>
+              <p class="mt-3 min-h-16 text-slate-600">Student virtual reality products and digital gallery experiments from CCCH9051.</p>
+              <button class="focus-ring mt-5 rounded-md px-4 py-2 font-bold text-white hover:bg-[#254e78]" type="button" data-course="CCCH9051" style="background: rgb(26, 58, 92);">View Collection</button>
+            </div>
+          </article>
+          <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            <div class="placeholder-art h-36"></div>
+            <div class="p-6">
+              <h2 class="heading text-xl font-bold" style="color: rgb(26, 58, 92);">AILT9008 — Videos</h2>
+              <p class="mt-3 min-h-16 text-slate-600">Placeholder short videos communicating core principles of AI literacy.</p>
+              <button class="focus-ring mt-5 rounded-md px-4 py-2 font-bold text-white hover:bg-[#254e78]" type="button" data-course="AILT9008" style="background: rgb(26, 58, 92);">View Collection</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- VR GALLERY -->
+    <section id="vr-gallery" class="view" aria-labelledby="vr-gallery-title">
+      <section style="background: rgb(26, 58, 92);">
+        <div class="mx-auto max-w-7xl px-5 py-12 lg:px-8 lg:py-16">
+          <p class="mb-4 text-sm font-bold uppercase tracking-[.16em]" style="color: rgb(212, 168, 67);">CCCH9051 · VR Product Gallery</p>
+          <h1 id="vr-gallery-title" class="heading text-4xl font-bold text-white sm:text-5xl">VR Product Gallery</h1>
+          <p class="mt-4 max-w-3xl text-xl leading-relaxed" style="color: rgb(226, 232, 240);">Explore the student virtual reality products and digital galleries submitted for CCCH9051.</p>
+          <button class="focus-ring mt-6 rounded-md border px-4 py-2 font-bold text-white hover:bg-white hover:text-[#1A3A5C]" type="button" onclick="switchView('collections')" style="border-color: rgba(255,255,255,.5); color: rgb(255, 255, 255);">Back to Course Collections</button>
+        </div>
+      </section>
+      <section class="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+        <h2 class="heading mb-6 text-xl font-bold" style="color: rgb(26, 58, 92);">CCCH9051 — VR Product Gallery</h2>
+
+        <div class="mb-8 flex gap-2 border-b border-slate-200" role="tablist" aria-label="CCCH9051 view">
+          <button type="button" id="tab-vr" role="tab" aria-selected="true" aria-controls="panel-vr" data-ccch-tab="vr"
+                  class="focus-ring -mb-px border-b-2 border-[#1A3A5C] px-5 py-3 font-bold text-[#1A3A5C]">
+            VR Products
+          </button>
+          <button type="button" id="tab-web" role="tab" aria-selected="false" aria-controls="panel-web" data-ccch-tab="web"
+                  class="focus-ring -mb-px border-b-2 border-transparent px-5 py-3 font-bold text-slate-500 hover:text-[#1A3A5C]">
+            Website Galleries
+          </button>
+        </div>
+
+        <div id="panel-vr" role="tabpanel" aria-labelledby="tab-vr">
+          <div id="vr-gallery-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
+          <div id="vr-gallery-empty" class="hidden rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-slate-600" role="status"></div>
+        </div>
+
+        <div id="panel-web" role="tabpanel" aria-labelledby="tab-web" class="hidden">
+          <p class="mb-6 text-sm text-slate-600">
+            <a class="font-bold underline" style="color: rgb(26, 58, 92);"
+               href="https://docs.google.com/spreadsheets/d/1ZkeXDGaoTRBBPFLrywqCxWXL1kts_zjSNT6oJje3Vp8/edit?gid=0#gid=0"
+               target="_blank" rel="noopener noreferrer">
+              Open the living list in Google Sheets ↗
+            </a>
+          </p>
+          <div id="digital-gallery-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
+          <div id="digital-gallery-empty" class="hidden rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center text-slate-600" role="status"></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- SUBMIT -->
+    <section id="submit" class="view" aria-labelledby="submit-title">
+      <section style="background: rgb(26, 58, 92);">
+        <div class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-20">
+          <p class="mb-4 text-sm font-bold uppercase tracking-[.16em]" style="color: rgb(212, 168, 67);">Contribute to the exhibition</p>
+          <h1 id="submit-title" class="heading text-4xl font-bold text-white sm:text-5xl">Submit Your Work</h1>
+          <p class="mt-5 text-xl" style="color: rgb(226, 232, 240);">Students and faculty can contribute works to the exhibition.</p>
+        </div>
+      </section>
+      <section class="mx-auto max-w-4xl px-5 py-16 lg:px-8">
+        <div class="mb-7 rounded-lg border-l-4 p-5" style="border-color: rgb(212, 168, 67); background: rgb(255, 250, 240);">
+          <p class="font-semibold" style="color: rgb(26, 58, 92);">Submissions will be reviewed before publishing.</p>
+        </div>
+        <form id="submission-form" class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8" novalidate>
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div><label class="mb-2 block font-bold" for="submit-name" style="color: rgb(26, 58, 92);">Name</label><input id="submit-name" required class="focus-ring w-full rounded-md border border-slate-300 px-3 py-2.5" type="text"></div>
+            <div><label class="mb-2 block font-bold" for="submit-email" style="color: rgb(26, 58, 92);">Email</label><input id="submit-email" required class="focus-ring w-full rounded-md border border-slate-300 px-3 py-2.5" type="email"></div>
+            <div><label class="mb-2 block font-bold" for="submit-course" style="color: rgb(26, 58, 92);">Course Code</label>
+              <select id="submit-course" required class="focus-ring w-full rounded-md border border-slate-300 bg-white px-3 py-2.5">
+                <option value="">Select a course</option><option>BSIM3021</option><option>BSIM3025</option><option>BSIM4019</option><option>CCCH9051</option><option>AILT9008</option>
+              </select>
+            </div>
+            <div><label class="mb-2 block font-bold" for="submit-artefact-title" style="color: rgb(26, 58, 92);">Artefact Title</label><input id="submit-artefact-title" required class="focus-ring w-full rounded-md border border-slate-300 px-3 py-2.5" type="text"></div>
+          </div>
+          <div class="mt-6"><label class="mb-2 block font-bold" for="submit-description-field" style="color: rgb(26, 58, 92);">Description</label><textarea id="submit-description-field" required rows="5" class="focus-ring w-full rounded-md border border-slate-300 px-3 py-2.5"></textarea></div>
+          <div class="mt-6"><label class="mb-2 block font-bold" for="submit-link" style="color: rgb(26, 58, 92);">Link to Artefact</label><input id="submit-link" class="focus-ring w-full rounded-md border border-slate-300 px-3 py-2.5" type="url"></div>
+          <div class="mt-6 flex items-start gap-3">
+            <input id="submit-consent" required class="focus-ring mt-1 h-4 w-4" type="checkbox" style="accent-color: rgb(26, 58, 92);">
+            <label class="text-slate-700" for="submit-consent">I confirm that I have permission to share this work in the exhibition.</label>
+          </div>
+          <p id="form-message" class="mt-5 hidden rounded-md p-4" role="status" aria-live="polite"></p>
+          <button id="submit-button" class="focus-ring mt-7 rounded-md px-6 py-3 font-bold hover:bg-[#e1ba60] disabled:cursor-not-allowed disabled:opacity-60" type="submit" style="background: rgb(212, 168, 67); color: rgb(26, 58, 92);">Submit for Review</button>
+        </form>
+        <div class="mt-8 text-center">
+          <a class="focus-ring font-bold underline decoration-2 underline-offset-4" href="mailto:project-team@example.com" style="color: rgb(26, 58, 92); text-decoration-color: rgb(212, 168, 67);">Contact the project team to submit your work</a>
+          <p class="mt-2 text-sm text-slate-500">Placeholder contact: project-team@example.com</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="border-t" style="background: rgb(26, 58, 92); border-color: rgb(26, 58, 92);">
+    <div class="mx-auto max-w-7xl px-5 py-9 text-center lg:px-8">
+      <p class="heading font-bold text-white">AI Literacy in Action: A Student Exhibition</p>
+      <p class="mt-2" style="color: rgb(226, 232, 240);">TDG-AIL — Developing a new AI Literacy course</p>
+      <p class="mt-1 text-sm" style="color: rgb(203, 213, 225);">This is an HKU teaching and learning project.</p>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div id="artefact-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/65 p-4 pointer-events-auto" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description" onclick="if(event.target===this)closePopup()">
+    <div class="relative max-h-[90%] w-full max-w-3xl overflow-y-auto rounded-xl shadow-2xl" style="background: rgb(248, 247, 244);">
+      <div class="flex items-center justify-between border-b border-slate-200 p-5">
+        <p class="text-sm font-bold uppercase tracking-[.16em]" style="color: rgb(26, 58, 92);">Work detail</p>
+        <button id="modal-close" class="focus-ring relative z-10 flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-md p-2 text-2xl font-bold leading-none text-white hover:bg-[#254e78]" type="button" onclick="closePopup()" aria-label="Close student work details" style="background: rgb(26, 58, 92);">×</button>
+      </div>
+      <div class="p-6 sm:p-8">
+        <div class="placeholder-art mb-6 flex h-56 items-center justify-center rounded-xl"><i data-lucide="image" class="h-12 w-12" style="color: rgba(26,58,92,.5);" aria-hidden="true"></i></div>
+        <span id="modal-course" class="rounded px-2 py-1 text-xs font-bold" style="background: rgb(230, 237, 243); color: rgb(26, 58, 92);"></span>
+        <h2 id="modal-title" class="heading mt-4 text-3xl font-bold" style="color: rgb(26, 58, 92);"></h2>
+        <p id="modal-students" class="mt-2 font-semibold text-slate-600"></p>
+        <p id="modal-description" class="mt-5 leading-relaxed text-slate-700"></p>
+        <div id="video-placeholder" class="mt-6 hidden">
+          <div id="video-preview" class="relative aspect-video overflow-hidden rounded-lg cursor-pointer" role="button" tabindex="0" aria-label="Play Human in the Loop video" onclick="playHumanInLoopVideo(event)" style="background: rgb(26, 58, 92);">
+            <img class="h-full w-full object-cover" loading="lazy" src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Human in the Loop YouTube video preview">
+            <div class="absolute inset-0 flex flex-col items-center justify-center" style="background: rgba(15,23,42,.35); pointer-events: none;">
+              <span class="rounded-full p-4 shadow-lg" style="background: rgb(212, 168, 67); color: rgb(26, 58, 92);"><i data-lucide="play" class="h-8 w-8 fill-current" aria-hidden="true"></i></span>
+              <span class="mt-3 rounded px-3 py-1 text-sm font-bold text-white" style="background: rgba(15,23,42,.7);">YouTube video</span>
+            </div>
+          </div>
+          <div id="video-player" class="hidden aspect-video overflow-hidden rounded-lg bg-black" style="display:none;">
+            <iframe width="560" height="315" src="about:blank" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="mt-2 text-sm text-slate-600">A YouTube video preview is available below.</p>
+          <a class="focus-ring mt-3 inline-block font-bold underline" href="https://youtu.be/dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" style="color: rgb(26, 58, 92);">Watch on YouTube</a>
+        </div>
+        <div class="mt-6 rounded-lg bg-white p-4">
+          <p class="text-sm font-bold" style="color: rgb(26, 58, 92);">Artefact link</p>
+          <p id="modal-link" class="mt-1 break-all text-slate-600"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <template id="gallery-card-template">
+    <article class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div class="placeholder-art flex h-40 items-center justify-center"><i data-lucide="layers-3" class="h-8 w-8" style="color: rgba(26,58,92,.45);" aria-hidden="true"></i></div>
+      <div class="p-5">
+        <div class="flex items-center justify-between gap-3">
+          <span class="gallery-course rounded px-2 py-1 text-xs font-bold" style="background: rgb(230, 237, 243); color: rgb(26, 58, 92);"></span>
+          <span class="gallery-type text-xs font-semibold text-slate-500"></span>
+        </div>
+        <h3 class="gallery-title heading mt-4 text-lg font-bold" style="color: rgb(26, 58, 92);"></h3>
+        <p class="gallery-students mt-2 text-sm font-semibold text-slate-600"></p>
+        <p class="gallery-description mt-3 min-h-12 text-sm leading-relaxed text-slate-600"></p>
+        <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
+          <span class="gallery-semester text-sm text-slate-500"></span>
+          <button class="gallery-view focus-ring rounded-md px-4 py-2 text-sm font-bold text-white hover:bg-[#254e78]" type="button" style="background: rgb(26, 58, 92);">View</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script>
+    // ============================================================
+    // Config
+    // ============================================================
+    const HUMAN_LOOP_VIDEO_ID = "dQw4w9WgXcQ";
+
+    // Relative path — works on Netlify, GitHub Pages, and localhost.
+    // The CSV must be in the same folder as index.html.
+    const CCCH9051_CSV_URL = encodeURI(
+      "./CCCH9051_Group Projects_Digital Galleries (living doc) - List of CCCH9051 grp prj.csv"
+    );
+    const CCCH9051_SHEET_URL =
+      "https://docs.google.com/spreadsheets/d/1ZkeXDGaoTRBBPFLrywqCxWXL1kts_zjSNT6oJje3Vp8/edit?gid=0#gid=0";
+
+    // ============================================================
+    // Page metadata + data
+    // ============================================================
+    const pageMetadata = {
+      home: ["AI Literacy Student Exhibition | TDG-AIL Project", "AI Literacy in Action: a student exhibition from the TDG-AIL Project at HKU."],
+      about: ["About TDG-AIL", "Learn about the TDG-AIL project and its AI literacy curriculum development at HKU."],
+      exhibition: ["Student Exhibition | TDG-AIL", "Browse student-created multimedia works from AI Literacy and related courses."],
+      collections: ["Course Collections | TDG-AIL", "Explore TDG-AIL student works organised by course."],
+      submit: ["Submit Your Work | TDG-AIL", "Submit a student work for review by the TDG-AIL project team."],
+      "vr-gallery": ["CCCH9051 VR Gallery | TDG-AIL", "Student virtual reality products from CCCH9051."]
+    };
+
+    const works = [
+      {id:1,title:"Mapping Everyday AI",course:"BSIM3021",students:"Student Name Placeholder",description:"A sample interactive website examining how AI appears in everyday decisions.",semester:"2024/25",type:"Website",link:"https://example.com/placeholder-work"},
+      {id:2,title:"Data Stories in Motion",course:"BSIM3025",students:"Student Name Placeholder",description:"A multimedia explainer that visualises responsible data use.",semester:"2024/25",type:"Multimedia",link:"https://example.com/placeholder-work"},
+      {id:3,title:"The Bias Lens",course:"BSIM4019",students:"Student Name Placeholder",description:"A poster series prompting critical reflection on algorithmic bias.",semester:"2024/25",type:"Poster",link:"https://example.com/placeholder-work"},
+      {id:4,title:"Gallery of Generated Worlds",course:"CCCH9051",students:"Student Name Placeholder",description:"A digital gallery prototype exploring authorship and generative media.",semester:"2024/25",type:"Website",link:"https://example.com/placeholder-work"},
+      {id:5,title:"Human in the Loop",course:"AILT9008",students:"Student Name Placeholder",description:"A short video reflection on human judgement in AI-assisted work.",semester:"2024/25",type:"Video",link:"YouTube or Vimeo URL placeholder"},
+      {id:6,title:"Designing with Care",course:"BSIM3021",students:"Student Name Placeholder",description:"A prototype website for communicating AI transparency principles.",semester:"2025/26",type:"Website",link:"https://example.com/placeholder-work"},
+      {id:7,title:"Prompt to Prototype",course:"BSIM3025",students:"Student Name Placeholder",description:"A multimedia process journal documenting iterative AI-supported making.",semester:"2025/26",type:"Multimedia",link:"https://example.com/placeholder-work"},
+      {id:8,title:"Signals and Systems",course:"BSIM4019",students:"Student Name Placeholder",description:"A visual poster explaining the social impact of recommender systems.",semester:"2025/26",type:"Poster",link:"https://example.com/placeholder-work"},
+      {id:9,title:"Archives Reimagined",course:"CCCH9051",students:"Student Name Placeholder",description:"A digital exhibition concept using AI as a curatorial prompt.",semester:"2025/26",type:"Multimedia",link:"https://example.com/placeholder-work"},
+      {id:10,title:"AI Literacy Minute",course:"AILT9008",students:"Student Name Placeholder",description:"A concise student video introducing a core AI literacy concept.",semester:"2025/26",type:"Video",link:"YouTube or Vimeo URL placeholder"}
+    ];
+
+   
+      const embeddedVrProducts = [
+      {name:"Pound Lane Bathhouse",url:"https://lavrplatform.com/watch?id=a0351a31-4151-4223-bb9d-df45627d44b8",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ff8065619-0309-4b71-a2e9-ebf4c047021e"},
+      {name:"618 Shanghai Street",url:"https://lavrplatform.com/watch?id=c2e884a0-567f-4dfa-8fc1-ea9117bc3db5",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fb7ca2259-4aad-4cbf-9f50-b3195ba9a996"},
+      {name:"Toko Merah (Red Store) Kota Tua",url:"https://lavrplatform.com/watch?id=fc65d526-de8f-486b-bfd5-f2a68dc9b009",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fb7ca58d1-a271-46ee-b624-4a65f0a4dba6"},
+      {name:"Tao Fong Shan Christian Centre",url:"https://lavrplatform.com/watch?id=c0961add-2d34-4b19-83fe-59b45e03202c",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fe219f82e-c8ba-4f7d-a542-4b1f7cb0bd47"},
+      {name:"Huang Xi Village(Foshan, China)",url:"https://lavrplatform.com/watch?id=5f1d272d-8427-48cb-adfa-78ad376ad37f",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F0496317e-381f-42c0-a219-2b6bb2394fbc"},
+      {name:"Gankeng Hakka Townlet (Shenzhen)",url:"https://lavrplatform.com/watch?id=a45b53e9-5614-44b4-a8d7-c287697345e7",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fe9b647bf-5348-46ae-a90a-a28136a36343"},
+      {name:"Sri Mariamman Temple",url:"https://lavrplatform.com/watch?id=8b94b2fb-e032-4749-81cd-99cbac5bd46f",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F4579dcdc-df70-46f7-a667-7d9c68a493d6"},
+      {name:"The Old Tsan Yuk Hosital",url:"https://lavrplatform.com/watch?id=ebbac0a8-aa84-45ec-a2a9-5d3f9b879dbc",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fddbb5df1-a60f-4ed4-97a4-bb8071d39945"},
+      {name:"Old Victoria Barracks, Cassels Block(Now Hong Kong Visual Arts Centre)",url:"https://lavrplatform.com/watch?id=0b4d7deb-dfd4-4809-8617-081400d249c1",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F549e5936-d6b3-4f30-84d3-5386574bb25b"},
+      {name:"Pak Tai Temple (HK)",url:"https://lavrplatform.com/watch?id=84370aac-7e01-4cde-a5d3-63df149808f4",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F0f7653d7-c55c-4497-9c91-a51196dbb887"},
+      {name:"Shing Wong Temple (HK)",url:"https://lavrplatform.com/watch?id=cf195172-3e15-4dc0-b199-172aa5daebc5",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F6f08ae89-abf4-46e7-8041-e2cd91cc965b"},
+      {name:"Chiwan Tianhou Temple (Shenzhen)",url:"https://lavrplatform.com/watch?id=5c5e549a-3ada-4bde-ac42-d3a789e1dedd",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fd6c3f684-414a-4d01-8a23-cadedd6c4e6e"},
+      {name:"Ladder Street (HK)",url:"https://lavrplatform.com/watch?id=cc1d0a52-bf4e-4512-8a45-295b4e66c6ff",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F5d673133-e2bb-4ae6-a95a-2223360f0108"},
+      {name:"Hong Kong Trams and Tramways",url:"https://lavrplatform.com/watch?id=eca932c3-edab-476d-88ad-e1a55263d018",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F529a8f5a-76c2-40fc-82c7-546f736e454c"},
+      {name:"Jubilee Battery (HK)",url:"https://lavrplatform.com/watch?id=88db17a8-8828-4421-a5e7-d98145701287",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F1ddf2c0c-4943-4fd6-985b-bc6420eefc19"},
+      {name:"Khalsa Diwan Hong Kong",url:"https://lavrplatform.com/watch?id=3a595e8c-3116-4de4-83d8-d5fadae294ac",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F53f43bd7-c112-4824-95e6-71b88d94699d"},
+      {name:"Former Yau Ma Tei Police Station (HK)",url:"https://lavrplatform.com/watch?id=e28bf3e1-e94e-42d2-a0ae-28cec13e95e5",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F2e074c20-84db-41a4-b353-c62edd9d8fbe"},
+      {name:"Foreign Correspondents' Club (HK)",url:"https://lavrplatform.com/watch?id=d4e6da40-fa30-4faa-95f3-dbd626916fec",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ff1869755-cba5-421b-8a36-fddbf7a5e6df"},
+      {name:"The Former Dona Carolina Cunha Mansion (Macau)",url:"https://lavrplatform.com/watch?id=958be90e-07af-458a-8ac4-e147cffde3d3",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F9b7f21e7-fbd1-4654-92df-2cffb5bf5dd9"},
+      {name:"Nan Lian Gardn (HK)",url:"https://lavrplatform.com/watch?id=3a04066f-e8ca-471a-99dd-4e9a59432224",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fb0cd263d-c990-4909-a69a-ef65b2acc22e"},
+      {name:"Race Course Fire Memorial (HK)",url:"https://lavrplatform.com/watch?id=6e184c44-b80a-45ba-9f8b-d6856f93afca",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fa4d92056-85fa-42ee-8a19-668fd06a4034"},
+      {name:"Kwong Fuk Ancestral Hall",url:"https://lavrplatform.com/watch?id=2ae47bf8-2dd0-4e33-9d3c-95abff7ae21e",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F491a091c-fcd2-46f2-bc7d-effa26a6d366"},
+      {name:"1933 Shanghai Slaughterhouse (China)",url:"https://lavrplatform.com/watch?id=bfbba549-54b0-45b8-acf7-0061f1f12718",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fc493c4ca-5922-443e-9575-0d29430a6f5c"},
+      {name:"Old Wan Chai Post Office (HK)",url:"https://lavrplatform.com/watch?id=448b0501-5774-48d7-bb75-88754dca36a6",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F8f84c3ec-74ca-49f6-b5f0-e4fc6b413049"},
+      {name:"St. Paul's Convent Church (HK)",url:"https://lavrplatform.com/watch?id=bca56c7d-fd72-40c8-9577-537cbc9e8407",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F09c8aeb0-4ce9-4835-9abb-6df93ed06e40"},
+      {name:"A Trip to Tiu Keng Leng in the Past",url:"https://lavrplatform.com/watch?id=f6346d54-93a2-43c1-9f54-e169d6666b38",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F2da2886e-46e0-4175-9433-3fbd9bbc20f6"},
+      {name:"Nantou Ancient Town: The Origin of Shenzhen's Urban History",url:"https://lavrplatform.com/watch?id=5aa1afc2-77d5-4806-8563-ec19f1486c91",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F2ffdae5c-62f2-472e-8dbd-fb6f2e4f6f9c"},
+      {name:"The Cenotaph of Hong Kong",url:"https://lavrplatform.com/watch?id=703aa6ce-b77c-4d53-bae8-2dff09619313",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F260ea8af-b899-4099-8ef3-d583a08ac0c8"},
+      {name:"Former Watchmen's Cottage : A Guardian",url:"https://lavrplatform.com/watch?id=3bc97ca7-2a7d-4e01-8193-4154914984f7",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F040c7436-e312-43ba-a7aa-3d5022e99ed8"},
+      {name:"ST.JOHN'S CATHEDRAL",url:"https://lavrplatform.com/watch?id=2b52fdf9-6abf-4c45-9d99-98ed2bc0ab4e",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fe52c4171-1aca-4608-82e8-d4f6abf498f1"},
+      {name:"The Lung Fu Shan Environmental Education Center",url:"https://lavrplatform.com/watch?id=35833503-043e-4edb-8afa-d63875f86e5b",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F43306d99-5ebc-4c0d-9edf-1ad8038248a2"},
+      {name:"Kennedy Town flame",url:"https://lavrplatform.com/watch?id=62d8535b-598c-4f47-8f45-2b7d7f981b44",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F37b775b6-6b01-469b-b442-1cb0910dece0"},
+      {name:"1st VR story: The Hong Kong City Hall",url:"https://lavrplatform.com/watch?id=4538168c-29bd-4170-a20e-95576e68c627",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F3b47b83f-7bc8-4950-83bb-4b68de748b00"},
+      {name:"Star Ferry Pier",url:"https://lavrplatform.com/watch?id=8123f53e-1e96-4e7b-b6a5-3c7f92f96caf",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fa164493f-7ba2-4e8b-bd84-b3d716220f2d"},
+      {name:"Signal Tower in Signal Hill Garden",url:"https://lavrplatform.com/watch?id=3b2c4430-5244-4360-8dce-19be2e9e918b",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F9d57f757-cac0-43d7-b988-063ed1e9a50c"},
+      {name:"Pok Fu Lam Masonry Bridge",url:"https://lavrplatform.com/watch?id=c38ab148-5337-4b73-987e-185d4397ee37",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F9bbbe96d-4f59-4001-9ef0-85918d6aa17a"},
+      {name:"A Trip to The Tung Chung Fort",url:"https://lavrplatform.com/watch?id=071346ed-d16a-4de1-9ff7-600af8efc6c0",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F301e2f0a-bfb7-4bf9-b26e-18f6224c0807"},
+      {name:"Old House of the Former Hoi Pa Village",url:"https://lavrplatform.com/watch?id=a95e677c-ae9f-4fa7-9999-34389f527b7d",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F2e65adc1-3e03-49b6-978b-fcd083f756cc"},
+      {name:"YMCA Bridges Street Centre",url:"https://lavrplatform.com/watch?id=ce6a85a0-0dc8-4e34-b136-726f4bc2067a",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F1a96433e-0a1f-4c56-9ea9-51a7265b517e"},
+      {name:"Pinewood Battery",url:"https://lavrplatform.com/watch?id=8f5d5680-b628-4ee1-8235-45c1505c4aa7",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F67eb1020-d0e2-4deb-95b0-8fcc37f1d9f5"},
+      {name:"Zhongshan Road in Shilong",url:"https://lavrplatform.com/watch?id=a7049809-e36e-47b6-afb6-7c33761b1789",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F6c834279-57de-4282-8673-564b3f7c2b55"},
+      {name:"St Andrew's Church: A Virtual Tour",url:"https://lavrplatform.com/watch?id=75519eaa-201e-40b8-8b0d-81e22f639577",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fbaa765d5-fb25-441b-80e1-da34754c7a13"},
+      {name:"Re-emergence of a Tang Monastery —— Chi Lin Nunnery",url:"https://lavrplatform.com/watch?id=d116273a-9a49-48e7-96e1-844decd81650",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F4206fee9-63d3-4129-898a-e6c98a6720a0"},
+      {name:"Chik Chuen Wai entrance gate",url:"https://lavrplatform.com/watch?id=a49f23b6-9208-4192-a414-123ae8df508b",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F5e1d2520-8d42-4399-89d2-145070412626"},
+      {name:"Kowloon West II Battery",url:"https://lavrplatform.com/watch?id=85d7f7dc-3561-4d73-a48b-78215eee5865",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ff3f5a6a9-27a0-4d7f-9845-0dac6ff40237"},
+      {name:"Jamia Mosque",url:"https://lavrplatform.com/watch?id=dc190413-78ec-4dc8-ad02-b0073be39c03",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F4937aaa2-03f4-488e-bade-30f493e52e04"},
+      {name:"Chungking Mansion (HK)",url:"https://lavrplatform.com/watch?id=758e8204-1015-41c7-a8b5-636cb085fbe1",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F96caa6ee-33b9-434b-a4be-6c8939d7ff48"},
+      {name:"Eliot Hall and May Hall (HKU)",url:"https://lavrplatform.com/watch?id=c51f1db0-3cb6-443e-be99-66ff09c822af",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F7d816617-80c1-40fe-8e6a-ac9916f09ee3"},
+      {name:"National History Museum (UK)",url:"https://lavrplatform.com/watch?id=5071228a-156c-4f0f-bb3d-bce06738e90b",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F9c7d7746-6155-4dfd-b04e-b380190bd789"},
+      {name:"Tengwang Pavilion (China)",url:"https://lavrplatform.com/watch?id=ecdee3c0-b3fa-47d8-9010-85d9433cf5df",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fce99122e-9d52-49c6-a2fc-ffc4610add83"},
+      {name:"Whitfield Barracks (HK)",url:"https://lavrplatform.com/watch?id=ffa824b5-799e-4f6c-bc03-14662788a82f",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fd0a96e77-844a-45ab-86f7-80319f5e0404"},
+      {name:"Peninsula (HK)",url:"https://lavrplatform.com/watch?id=ff53dbe2-97db-4073-b6e8-ffd32003dc4c",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F51839295-1c01-4144-8640-3bdb4bbfe2cc"},
+      {name:"Tin Hau Temple (HK)",url:"https://lavrplatform.com/watch?id=4ea25bc0-7b7c-40f1-8014-036c85a6f66e",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F194792f3-c1ef-4e53-bb53-9607036c05b2"},
+      {name:"Lo Pan Temple (HK)",url:"https://lavrplatform.com/watch?id=fd2b178e-20df-4bd3-8ef3-c0787b911156",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ff4033093-e5cb-4947-ab28-89cbde0e7ae5"},
+      {name:"Bonham Road Goverment Primary School (HK)",url:"https://lavrplatform.com/watch?id=a5487764-9fd1-492c-9960-3571620353f3",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F9fc9ae1f-6895-4500-b5fe-7125cd6c395c"},
+      {name:"Western Market (HK)",url:"https://lavrplatform.com/watch?id=b6b287ae-2d47-4f1f-bdd4-089833566548",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F7694ecde-c598-40a4-bac2-bb38e3c8e319"},
+      {name:"Dining Hall at St. John's College (HKU)",url:"https://lavrplatform.com/watch?id=828a12c4-d3d2-4c07-8a10-91b8d6da23f4",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ff81b9498-16fc-4a0c-9bf8-37c92614c849"},
+      {name:"St. Mary's Church (HK)",url:"https://lavrplatform.com/watch?id=ce88c42f-04ab-40ba-b3a9-404ec11f8738",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F23d7b5bd-f2f9-4841-b1ed-f7dfa8f0bad6"},
+      {name:"Tianzifang (China)",url:"https://lavrplatform.com/watch?id=908c83b9-250f-4e63-adde-902792526118",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ffcb2b6eb-9fe3-45e0-8d40-33e633e9c2c7"},
+      {name:"Thean Hou Temple (Malaysia)",url:"https://lavrplatform.com/watch?id=20c68512-cfd1-4c80-94df-a69e34091bd6",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fd19668de-6ea9-4fa9-a008-7be893620ada"},
+      {name:"Pottinger Street (HK)",url:"https://lavrplatform.com/watch?id=fe7e1b7d-856f-4b09-a77b-935efc35b09e",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F11eacdb4-05ea-4125-a052-e1ad39ab28ec"},
+      {name:"Canglang Pavilion (China)",url:"https://lavrplatform.com/watch?id=ae1af82e-aeb8-42ce-a6dd-827aaf456fa4",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F7efe6a5b-7407-4b38-81b3-5b293d00e349"},
+      {name:"Fan Sin Temple (HK)",url:"https://lavrplatform.com/watch?id=12bd0fc0-7d6e-490b-bf5e-0ae16ed00c4b",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F45464dc0-7faf-42d4-b97b-90e66fb7a819"},
+      {name:"Yu Garden (China)",url:"https://lavrplatform.com/watch?id=e677fab0-4e77-4ec5-a781-65c7ceb2c58d",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F7ed4eec3-7caa-451c-ba2a-a4049735888e"},
+      {name:"Martinikerk (Netherlands)",url:"https://lavrplatform.com/watch?id=8119a2c0-0e9c-4768-8177-d372211ff6cd",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F319d97b4-9f87-4c64-9066-6694c6e618ec"},
+      {name:"Clock Tower (HK)",url:"https://lavrplatform.com/watch?id=265fc9f0-23b4-404e-a4ac-f48bb3449f8c",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F81db13f1-f361-4103-b127-c61ee0113971"},
+      {name:"Nanguanxiang Historical and Cultural District (China)",url:"https://lavrplatform.com/watch?id=9f0cdb88-a8df-443c-a5fd-562f86bca430",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fae1582e5-c0d1-47d2-8cc8-262421c9722e"},
+      {name:"Blue House (HK)",url:"https://lavrplatform.com/watch?id=aeab1ba4-232e-4ab4-aa78-90b0ae1f3598",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ff47e40fe-f595-4190-b434-fb0546ede6f5"},
+      {name:"Peace Hotel (China)",url:"https://lavrplatform.com/watch?id=138d4b4e-7488-4f09-a027-dc9d69142cdf",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fe7b63d4c-60e8-475c-8109-bb09d14310cb"},
+      {name:"Former Marine Police Headquarters / 1881 Heritage (HK)",url:"https://lavrplatform.com/watch?id=6bc48fba-323b-4b5c-a771-3b691bea30ff",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F0d134cdd-5686-4f45-8ae8-ba773b792a06"},
+      {name:"Mengle Buddhist Temple (China)",url:"https://lavrplatform.com/watch?id=242e623e-e4ae-4326-94ab-d5d303906559",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F3691f863-755b-48f8-9ef6-aadd74bf4710"},
+      {name:"Old Town of Jakarta (Indonesia)",url:"https://lavrplatform.com/watch?id=022b7615-91a4-47a9-acb1-9f2924d5e47d",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ff7da18b4-0039-4957-bd12-3ab3278700ed"},
+      {name:"Central Market (HK)",url:"https://lavrplatform.com/watch?id=ab251fb5-728e-405f-8d75-96860597e130",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F08fe564a-1f04-4721-91f5-965ed04983f2"},
+      {name:"Daci Temple (China)",url:"https://lavrplatform.com/watch?id=fe6addcd-fb59-4dc3-8b85-79047cfca216",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F9f4a1cc7-ef6b-4241-8ffc-2917d85082eb"},
+      {name:"Elliot Pumping Station & Filters (HKU)",url:"https://lavrplatform.com/watch?id=8c7619fc-a52f-4691-a583-136d35312c1a",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fc0885aa6-4be9-42c6-9a58-15ae602fbc7a"},
+      {name:"Mei Ho House (HK)",url:"https://lavrplatform.com/watch?id=3bcadea2-57b3-42e1-a561-8373d3f63996",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ffa4bc04c-f440-4a1c-aa79-2fda5b540024"},
+      {name:"Yu Palace (China)",url:"https://lavrplatform.com/watch?id=a948d2f7-3c07-4173-9af3-69eec897adc6",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F7932bd8b-530e-4c93-8361-66cf22c63d91"},
+      {name:"Wong Uk Village (HK)",url:"https://lavrplatform.com/watch?id=ac07efeb-e98b-4f62-99d1-3a6fa125df17",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F2361aa22-caa5-4717-aea9-643b55a59f54"},
+      {name:"Yuxiang Cotton Mill (China)",url:"https://lavrplatform.com/watch?id=b6e7097e-aaf1-4991-a71e-ded407e2d674",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fcb16c5c2-df09-44fa-8f89-7c8eab4e2c59"},
+      {name:"Wat Chaiwatthanaram (Thailand)",url:"https://lavrplatform.com/watch?id=9f51171d-dca3-48e1-b6c2-406a7d241b80",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F0263a867-beb7-469f-bc53-5dfec0f59225"},
+      {name:"Jun Wang Fu (China)",url:"https://lavrplatform.com/watch?id=d3621146-a9a2-4155-968a-02cb74d3d3bf",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fe8f0285e-dda6-483b-be82-30ffa541a832"},
+      {name:"Tianzhuang Ancient Street (China)",url:"https://lavrplatform.com/watch?id=f8a34af9-5e6b-49d4-9b9e-2945aed4a938",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F3a3d29f2-c5c2-451b-aab1-2db6ee3fcb4a"},
+      {name:"Woo Cheong Pawnshop (HK)",url:"https://lavrplatform.com/watch?id=6a3b0b0c-ff83-4a4d-8939-6e7c9bf1f7be",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F943f9c7b-c33d-4f6e-be01-e7b42214f229"},
+      {name:"Longzhou Natural Landscape Park (China)",url:"https://lavrplatform.com/watch?id=c8dc4d95-5bf8-4f41-acb6-b015edfd7bb4",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F1704a6af-906f-4f87-994e-8badd667abf3"},
+      {name:"Malayan Railway Administration Building (Malaysia)",url:"https://lavrplatform.com/watch?id=aa1c9ba3-6e7e-48f7-a078-c8b94c3d0667",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F265e8adf-d968-475e-a5d6-e44d274e189e"},
+      {name:"Sung Wong Toi Garden (HK)",url:"https://lavrplatform.com/watch?id=c753608a-4b23-4239-bc29-584c8149b299",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Ffd9dd8d8-80b9-4161-9e5b-2dcc0ca39dac"},
+      {name:"Xu Zhimo's Former Residence (China)",url:"https://lavrplatform.com/watch?id=4af53068-4179-44fa-915e-e96f8e08f0d7",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fbb1bbeaf-bb43-41d5-ae56-bf6291540889"},
+      {name:"Chater Garden (HK)",url:"https://lavrplatform.com/watch?id=a8b839b7-15eb-471b-b0f1-11a494e89007",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fa6d17dcc-e075-4927-8f72-6da33311dda5"},
+      {name:"Kuanzhai Alley (China)",url:"https://lavrplatform.com/watch?id=85fa79de-7599-4a4b-89c0-72cdb2b6ed59",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fc2d4a34c-dd52-44e9-80f5-ab1d9816c009"},
+      {name:"Hampton Court Palace (UK)",url:"https://lavrplatform.com/watch?id=ae458bf5-de0f-4ae1-a270-e0056043fad4",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F50e77a76-fd24-4d03-989d-eacd12c9ffe6"},
+      {name:"Pak Tsz Lane Park (HK)",url:"https://lavrplatform.com/watch?id=28be96f1-2c48-4019-8f62-cf008c14a04a",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F398c7de0-e8c5-4556-97cf-84e20ae28c33"},
+      {name:"Former Residence of Zhao Puchu (China)",url:"https://lavrplatform.com/watch?id=b02db343-8522-4c29-9a33-fe4e3751099c",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fbc68bdfd-9fd0-452f-8a84-fe0ad7fab2d0"},
+      {name:"Sun Yat Sen Memorial Park (HK)",url:"https://lavrplatform.com/watch?id=623c14ba-e0f0-4f05-87d1-0a794c586121",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F310e017f-e500-4baa-9249-29c53f22659f"},
+      {name:"Mausoleum of Genghis Khan (China)",url:"https://lavrplatform.com/watch?id=b07f7054-88cf-4308-9ede-0c77e1098347",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F32a9dfc4-d1fc-4ce8-a714-cc71ec519356"},
+      {name:"Law Uk Folk Museum (HK)",url:"https://lavrplatform.com/watch?id=5e1be623-a032-4dc0-8b3b-c542711506cd",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F1cefecc0-e643-44a1-b08e-f95fce4a449e"},
+      {name:"Yellow Crane Tower (China)",url:"https://lavrplatform.com/watch?id=0632cf44-04ff-4476-9bbc-74775e9c3853",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fe2555f81-af88-41fe-9ed5-04e51acf2c39"},
+      {name:"Centotaph (HK)",url:"https://lavrplatform.com/watch?id=c889ad76-4cfc-49ab-b065-13e8d419b527",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F66894078-941f-4359-b610-2f968803fdbe"},
+      {name:"Baixiangju (China)",url:"https://lavrplatform.com/watch?id=f4fbb876-8a69-467b-8d46-3580d8b07486",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fc7016c23-0b7b-4e1a-b30c-61ad69e6b984"},
+      {name:"7 Mallory Street (HK)",url:"https://lavrplatform.com/watch?id=6f063c1f-8386-42ad-85f1-3c4b6720e2b4",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Faf25e745-6d9e-4645-8ebb-8926e17830a3"},
+      {name:"Hero Mountain (China)",url:"https://lavrplatform.com/watch?id=b0aef0c1-478f-42df-8940-0af4c5945378",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fb57e6b45-0760-48f9-9e1e-0a5dca6f15aa"},
+      {name:"Island House (HK)",url:"https://lavrplatform.com/watch?id=40241bd6-2a62-4758-9681-febdebc5dff0",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fbb67964a-bedc-44fd-bfe0-36353c0c44f1"},
+      {name:"Pokfulam Village (HK)",url:"https://lavrplatform.com/watch?id=93bbaf34-74f4-447f-91cf-70829afeab1f",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F582abd1a-d7f9-443c-b16c-5b3736dfd325"},
+      {name:"The Mills (HK)",url:"https://lavrplatform.com/watch?id=fe2d4a06-cfa5-4b09-9291-7226a17b753f",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fab28e647-c4ee-412c-9207-349e07adf0ea"},
+      {name:"Rosary Church (HK)",url:"https://lavrplatform.com/watch?id=d29a066c-2aa3-413d-b388-36495afdb7cd",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F13fb4fb4-3a31-4a63-a986-bde09b196845"},
+      {name:"Lin Fa Kung (HK)",url:"https://lavrplatform.com/watch?id=abca9260-2374-49e1-9dc7-e7eedbf1f2af",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F18efb877-18dc-4275-9415-b25e88bb1c1c"},
+      {name:"Bank of China (HK)",url:"https://lavrplatform.com/watch?id=e8ebb025-d7c3-4424-b3a7-d825135e98ef",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F6faffc7d-042f-488e-a3c5-f95501ccfecc"},
+      {name:"Yim Tin Tsai (HK)",url:"https://lavrplatform.com/watch?id=40ba0b29-5719-4996-bbf3-f3cb4def43c7",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fb8f8fda3-8142-4ede-9d28-08979e557043"},
+      {name:"Signal Hill Tower (HK)",url:"https://lavrplatform.com/watch?id=5f5ab970-4eb5-4fcb-b69d-15043051691c",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fce0e572f-8349-45ea-a30a-5624e21a754d"},
+      {name:"Sai Wan Ho Pier (HK)",url:"https://lavrplatform.com/watch?id=e0a15185-3bd1-4f9c-b772-e3fff6c5e034",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F22f4fb86-9981-43f4-bad0-03a2bfee6991"},
+      {name:"Lui Seng Chun (HK)",url:"https://lavrplatform.com/watch?id=351d0a8a-b1f6-427f-b86f-4efe0de71ff0",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2Fa09c88ab-6f78-4094-ba71-fe62634fefb7"},
+      {name:"Lei Cheng Uk Han Tomb (HK)",url:"https://lavrplatform.com/watch?id=acd084ce-00a2-4108-9351-0ec92d043862",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F3358f8da-1c27-4a45-be6b-354e4affca45"},
+      {name:"Former Kowloon British School (HK)",url:"https://lavrplatform.com/watch?id=d9b3193b-f349-421b-b608-83c63bba1f79",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F1214d00d-247f-4cbb-bb33-f4c480c295c7"},
+      {name:"Old Central Police Station / Tai Kwun (HK)",url:"https://lavrplatform.com/watch?id=77c7f8ee-c17a-40b6-9fa2-fe3dbcd1046f",image:"https://lavrplatform.com/cf-images/?width=600&height=600&fit=scale-down&image=https%3A%2F%2Flavr-uploads-prod.s3.ap-east-1.amazonaws.com%2FSCENE_BACKGROUND_IMAGE%2F16a3e9ba-7707-4e0e-9a00-b12d500a1ebc"}
+    ];
+
+    // ============================================================
+    // State
+    // ============================================================
+    let visibleWorks = 6;
+    let currentWork = null;
+    let lastFocusedElement = null;
+    let currentRecords = [];
+    let videoPlaying = false;
+    let vrGalleryLoaded = false;
+    let ccch9051Galleries = [];
+    let digitalGalleryLoaded = false;
+    let digitalGalleryLoading = false;
+
+    // ============================================================
+    // View routing
+    // ============================================================
+    function switchView(view, options = {}) {
+      if (!pageMetadata[view]) view = "home";
+      document.querySelectorAll(".view").forEach(section => section.classList.toggle("active", section.id === view));
+      document.querySelectorAll(".nav-link").forEach(link => {
+        const active = link.dataset.view === view;
+        link.classList.toggle("active", active);
+        link.setAttribute("aria-current", active ? "page" : "false");
+      });
+      document.querySelectorAll(".mobile-nav").forEach(link => {
+        const active = link.dataset.view === view;
+        link.classList.toggle("bg-slate-200", active);
+        link.setAttribute("aria-current", active ? "page" : "false");
+      });
+      const [title, description] = pageMetadata[view];
+      document.title = title;
+      document.getElementById("page-description").setAttribute("content", description);
+      document.getElementById("mobile-menu").classList.add("hidden");
+      document.getElementById("menu-toggle").setAttribute("aria-expanded", "false");
+      if (!options.skipHistory && window.location.hash !== `#${view}`) {
+        const method = options.replace ? "replaceState" : "pushState";
+        history[method]({ view }, "", `#${view}`);
+      }
+      if (view === "vr-gallery") {
+        switchCcchTab("vr");
+      }
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+      });
+    }
+
+    // ============================================================
+    // Exhibition gallery
+    // ============================================================
+    function filteredWorks() {
+      const course = document.getElementById("course-filter").value;
+      const type = document.getElementById("type-filter").value;
+      const semester = document.getElementById("semester-filter").value;
+      return works.filter(work =>
+        (course === "All Courses" || work.course === course) &&
+        (type === "All Types" || work.type === type) &&
+        (semester === "All Semesters" || work.semester === semester)
+      );
+    }
+
+    function renderGallery() {
+      const list = filteredWorks();
+      const gallery = document.getElementById("gallery");
+      gallery.replaceChildren();
+      const shown = list.slice(0, visibleWorks);
+      shown.forEach(work => {
+        const fragment = document.getElementById("gallery-card-template").content.cloneNode(true);
+        fragment.querySelector(".gallery-course").textContent = work.course;
+        fragment.querySelector(".gallery-type").textContent = work.type;
+        fragment.querySelector(".gallery-title").textContent = work.title;
+        fragment.querySelector(".gallery-students").textContent = work.students;
+        fragment.querySelector(".gallery-description").textContent = work.description;
+        fragment.querySelector(".gallery-semester").textContent = work.semester;
+        fragment.querySelector(".gallery-view").addEventListener("click", () => openModal(work));
+        gallery.appendChild(fragment);
+      });
+      document.getElementById("result-count").textContent = `${list.length} placeholder work${list.length === 1 ? "" : "s"} found`;
+      document.getElementById("empty-state").classList.toggle("hidden", list.length !== 0);
+      document.getElementById("load-more").classList.toggle("hidden", list.length <= visibleWorks || list.length === 0);
+      lucide.createIcons();
+    }
+
+    function setCourseFilter(course) {
+      if (course === "CCCH9051") { switchView("vr-gallery"); return; }
+      document.getElementById("course-filter").value = course;
+      visibleWorks = 6;
+      switchView("exhibition");
+      renderGallery();
+    }
+
+    // ============================================================
+    // CCCH9051 VR products
+    // ============================================================
+    function loadVrGallery() {
+      if (vrGalleryLoaded) return;
+      const grid = document.getElementById("vr-gallery-grid");
+      const empty = document.getElementById("vr-gallery-empty");
+      const rows = embeddedVrProducts;
+
+      if (!rows.length) {
+        empty.textContent = "No VR products are currently available.";
+        empty.classList.remove("hidden");
+        vrGalleryLoaded = true;
+        return;
+      }
+
+      empty.classList.add("hidden");
+
+      rows.forEach(({ name, url, image }) => {
+        const card = document.createElement("a");
+        card.className =
+          "group block overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md focus-ring";
+        card.href = url;
+        card.target = "_blank";
+        card.rel = "noopener noreferrer";
+        card.setAttribute("aria-label", `Open ${name} VR product in a new tab`);
+
+        const img = document.createElement("img");
+        img.className = "h-48 w-full object-cover transition duration-200 group-hover:opacity-90";
+        img.loading = "lazy";
+        img.alt = name;
+        img.src = image;
+        img.referrerPolicy = "no-referrer";
+        img.onerror = () => {
+          if (!img.parentNode) return;
+          const fallback = document.createElement("div");
+          fallback.className =
+            "flex h-48 items-center justify-center px-6 text-center text-sm font-semibold";
+          fallback.style.background = "linear-gradient(135deg,#dce6ed,#f4efe3)";
+          fallback.style.color = "rgb(26, 58, 92)";
+          fallback.textContent = "Preview unavailable — click to open VR product";
+          img.replaceWith(fallback);
+        };
+
+        const body = document.createElement("div");
+        body.className = "p-5";
+
+        const title = document.createElement("h2");
+        title.className = "heading text-xl font-bold text-[#1A3A5C] group-hover:underline";
+        title.textContent = name;
+
+        const desc = document.createElement("p");
+        desc.className = "mt-2 text-sm font-semibold text-slate-600";
+        desc.textContent = "VR product · click to open";
+
+        const hint = document.createElement("p");
+        hint.className = "mt-4 text-sm font-bold text-[#1A3A5C]";
+        hint.textContent = "Open VR product ↗";
+
+        body.append(title, desc, hint);
+        card.append(img, body);
+        grid.append(card);
+      });
+
+      vrGalleryLoaded = true;
+    }
+
+    // ============================================================
+    // CCCH9051 website galleries (from CSV)
+    // ============================================================
+    function normalizeUrl(raw) {
+      let url = (raw || "").trim().replace(/^["']|["']$/g, "").replace(/\\+$/, "");
+      if (!url) return "";
+      if (!/^https?:\/\//i.test(url)) url = "https://" + url;
+      return url;
+    }
+
+    function websitePreviewUrl(url, width = 600) {
+      return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=${width}`;
+    }
+
+    async function loadDigitalGalleries() {
+      if (digitalGalleryLoaded || digitalGalleryLoading) return;
+
+      const grid = document.getElementById("digital-gallery-grid");
+      const empty = document.getElementById("digital-gallery-empty");
+
+      digitalGalleryLoading = true;
+      empty.classList.add("hidden");
+      grid.innerHTML =
+        '<p class="col-span-full py-10 text-center font-semibold text-slate-600">Loading CCCH9051 digital galleries…</p>';
+
+      try {
+        const response = await fetch(CCCH9051_CSV_URL, { cache: "no-store" });
+        if (!response.ok) throw new Error(`CSV request failed: ${response.status}`);
+
+        const csv = await response.text();
+        const parsed = Papa.parse(csv, { header: true, skipEmptyLines: true });
+
+        ccch9051Galleries = parsed.data
+          .filter(row => row.Theme && row.Link)
+          .map(row => ({
+            cohort: (row.Cohort || "").trim(),
+            group: (row["Group#"] || "").trim(),
+            title: (row.Theme || "").trim(),
+            url: normalizeUrl(row.Link)
+          }))
+          .filter(item => item.url);
+
+        digitalGalleryLoaded = true;
+        renderDigitalGalleries();
+      } catch (error) {
+        console.error(error);
+        grid.replaceChildren();
+        empty.classList.remove("hidden");
+        empty.innerHTML = `
+          <p class="font-semibold">Unable to load the CCCH9051 digital gallery list.</p>
+          <p class="mt-3">
+            <a class="font-bold underline" style="color: rgb(26, 58, 92);"
+               href="${CCCH9051_SHEET_URL}" target="_blank" rel="noopener noreferrer">
+              Open the Google Sheet directly
+            </a>
+          </p>`;
+      } finally {
+        digitalGalleryLoading = false;
+      }
+    }
+
+    function renderDigitalGalleries() {
+      const grid = document.getElementById("digital-gallery-grid");
+      const empty = document.getElementById("digital-gallery-empty");
+
+      grid.replaceChildren();
+
+      if (!ccch9051Galleries.length) {
+        empty.textContent = "No CCCH9051 digital galleries are currently available.";
+        empty.classList.remove("hidden");
+        return;
+      }
+
+      empty.classList.add("hidden");
+
+      ccch9051Galleries.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm";
+
+        const link = document.createElement("a");
+        link.href = item.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.className = "group block focus-ring";
+        link.setAttribute("aria-label", `Open ${item.title} in a new tab`);
+
+        const img = document.createElement("img");
+        img.className = "h-48 w-full object-cover transition duration-200 group-hover:opacity-90";
+        img.loading = "lazy";
+        img.alt = `Website preview of ${item.title}`;
+        img.referrerPolicy = "no-referrer";
+        img.src = websitePreviewUrl(item.url);
+
+        img.onerror = () => {
+          if (!img.parentNode) return;
+          const fallback = document.createElement("div");
+          fallback.className =
+            "flex h-48 items-center justify-center px-6 text-center text-sm font-semibold";
+          fallback.style.background = "linear-gradient(135deg,#dce6ed,#f4efe3)";
+          fallback.style.color = "rgb(26, 58, 92)";
+          fallback.textContent = "Preview unavailable — click to open website";
+          img.replaceWith(fallback);
+        };
+
+        const body = document.createElement("div");
+        body.className = "p-5";
+
+        const title = document.createElement("h2");
+        title.className = "heading text-xl font-bold text-[#1A3A5C] group-hover:underline";
+        title.textContent = item.title;
+
+        const meta = document.createElement("p");
+        meta.className = "mt-2 text-sm font-semibold text-slate-600";
+        meta.textContent = [item.cohort, item.group ? `Group ${item.group}` : ""]
+          .filter(Boolean)
+          .join(" · ");
+
+        const hint = document.createElement("p");
+        hint.className = "mt-4 text-sm font-bold text-[#1A3A5C]";
+        hint.textContent = "Open gallery ↗";
+
+        body.append(title, meta, hint);
+        link.append(img, body);
+        card.append(link);
+        grid.append(card);
+      });
+    }
+
+    // ============================================================
+    // CCCH9051 tab bar
+    // ============================================================
+    function switchCcchTab(name) {
+      const isVr = name === "vr";
+
+      document.querySelectorAll("[data-ccch-tab]").forEach(btn => {
+        const active = btn.dataset.ccchTab === name;
+        btn.setAttribute("aria-selected", String(active));
+        btn.classList.toggle("border-[#1A3A5C]", active);
+        btn.classList.toggle("text-[#1A3A5C]", active);
+        btn.classList.toggle("border-transparent", !active);
+        btn.classList.toggle("text-slate-500", !active);
+      });
+
+      document.getElementById("panel-vr").classList.toggle("hidden", !isVr);
+      document.getElementById("panel-web").classList.toggle("hidden", isVr);
+
+      if (isVr) loadVrGallery();
+      else loadDigitalGalleries();
+    }
+
+    // ============================================================
+    // Video + modal
+    // ============================================================
+    function playHumanInLoopVideo(event) {
+      if (event && event.preventDefault) event.preventDefault();
+      if (videoPlaying) return;
+      videoPlaying = true;
+      setTimeout(() => { videoPlaying = false; }, 800);
+
+      const preview = document.getElementById("video-preview");
+      const player = document.getElementById("video-player");
+      if (!player) return;
+      const frame = player.querySelector("iframe");
+      if (frame) {
+        frame.src = `https://www.youtube-nocookie.com/embed/${HUMAN_LOOP_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      }
+      if (preview) {
+        preview.classList.add("hidden");
+        preview.style.display = "none";
+      }
+      player.classList.remove("hidden");
+      player.style.display = "block";
+    }
+
+    function openModal(work) {
+      currentWork = work;
+      lastFocusedElement = document.activeElement;
+      document.getElementById("modal-course").textContent = `${work.course} · ${work.semester} · ${work.type}`;
+      document.getElementById("modal-title").textContent = work.title;
+      document.getElementById("modal-students").textContent = work.students;
+      document.getElementById("modal-description").textContent = work.description;
+      document.getElementById("modal-link").textContent = work.link;
+      const videoPlaceholder = document.getElementById("video-placeholder");
+      const videoPreview = document.getElementById("video-preview");
+      const videoPlayer = document.getElementById("video-player");
+      const videoFrame = videoPlayer.querySelector("iframe");
+      const isHumanInLoop = work.id === 5;
+      videoPlaceholder.classList.toggle("hidden", !isHumanInLoop);
+      videoPreview.classList.remove("hidden");
+      videoPreview.style.display = "block";
+      videoPlayer.classList.add("hidden");
+      videoPlayer.style.display = "none";
+      videoFrame.src = "about:blank";
+      const modal = document.getElementById("artefact-modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      modal.style.display = "flex";
+      modal.removeAttribute("aria-hidden");
+      document.body.classList.add("modal-open");
+      document.addEventListener("keydown", popupKeydown);
+      const closeBtn = document.getElementById("modal-close");
+      if (closeBtn) { try { closeBtn.focus(); } catch (e) {} }
+    }
+
+    function closePopup() {
+      const modal = document.getElementById("artefact-modal");
+      if (!modal) return;
+      modal.style.display = "none";
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      document.removeEventListener("keydown", popupKeydown);
+      const target = lastFocusedElement;
+      lastFocusedElement = null;
+      currentWork = null;
+      if (target && typeof target.focus === "function" && document.body.contains(target)) {
+        try { target.focus(); } catch (e) {}
+      }
+    }
+
+    function popupKeydown(event) {
+      const modal = document.getElementById("artefact-modal");
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closePopup();
+        return;
+      }
+      if (event.key === "Tab") {
+        const focusable = modal.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])");
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    }
+
+    // ============================================================
+    // Form message + submission
+    // ============================================================
+    function message(text, type) {
+      const el = document.getElementById("form-message");
+      el.textContent = text;
+      el.className = `mt-5 rounded-md p-4 ${type === "success" ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-800"}`;
+    }
+
+    const dataHandler = {
+      onDataChanged(data) { currentRecords = data || []; }
+    };
+
+    async function initData() {
+      if (!window.dataSdk) return;
+      try {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          message("The submission service is temporarily unavailable. Please use the contact email below.", "error");
+        }
+      } catch (e) {
+        console.warn("Data init failed:", e);
+      }
+    }
+
+    document.getElementById("submission-form").addEventListener("submit", async event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const submitButton = document.getElementById("submit-button");
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        message("Please complete all required fields and confirm permission to share the work.", "error");
+        return;
+      }
+      if (currentRecords.length >= 999) {
+        message("The submission limit has been reached. Please contact the project team.", "error");
+        return;
+      }
+      if (!window.dataSdk) {
+        message("Online submission is not available at the moment. Please contact the project team by email.", "error");
+        return;
+      }
+      submitButton.disabled = true;
+      try {
+        const result = await window.dataSdk.create({
+          name: document.getElementById("submit-name").value.trim(),
+          email: document.getElementById("submit-email").value.trim(),
+          course_code: document.getElementById("submit-course").value,
+          artefact_title: document.getElementById("submit-artefact-title").value.trim(),
+          description: document.getElementById("submit-description-field").value.trim(),
+          artefact_link: document.getElementById("submit-link").value.trim(),
+          consent: document.getElementById("submit-consent").checked,
+          submitted_at: new Date().toISOString()
+        });
+        if (result.isOk) {
+          form.reset();
+          message("Thank you. Your submission is ready for project-team review.", "success");
+        } else {
+          message("Your submission could not be received. Please try again or contact the project team.", "error");
+        }
+      } catch (e) {
+        console.error(e);
+        message("Your submission could not be received. Please try again or contact the project team.", "error");
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+
+    // ============================================================
+    // Wiring
+    // ============================================================
+    document.querySelectorAll("[data-view]").forEach(button =>
+      button.addEventListener("click", () => switchView(button.dataset.view))
+    );
+
+    document.querySelectorAll("[data-course]").forEach(button =>
+      button.addEventListener("click", () => setCourseFilter(button.dataset.course))
+    );
+
+    document.querySelectorAll("[data-feature-work]").forEach(card => {
+      const open = () => {
+        switchView("exhibition");
+        const work = works.find(item => item.id === Number(card.dataset.featureWork));
+        if (work) openModal(work);
+      };
+      card.addEventListener("click", open);
+      card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); }
+      });
+    });
+
+    window.addEventListener("popstate", () => switchView(window.location.hash.slice(1), { skipHistory: true }));
+    window.addEventListener("hashchange", () => switchView(window.location.hash.slice(1), { skipHistory: true }));
+
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+      const menu = document.getElementById("mobile-menu");
+      const open = menu.classList.toggle("hidden") === false;
+      document.getElementById("menu-toggle").setAttribute("aria-expanded", String(open));
+    });
+
+    ["course-filter","type-filter","semester-filter"].forEach(id =>
+      document.getElementById(id).addEventListener("change", () => { visibleWorks = 6; renderGallery(); })
+    );
+
+    document.getElementById("reset-filters-button").addEventListener("click", () => {
+      document.getElementById("filter-form").reset();
+      visibleWorks = 6;
+      renderGallery();
+    });
+
+    document.getElementById("load-more").addEventListener("click", () => { visibleWorks += 3; renderGallery(); });
+
+    // Close button (direct + capture-phase fallback)
+    (function bindClose() {
+      const btn = document.getElementById("modal-close");
+      if (!btn || btn.dataset.bound) return;
+      btn.dataset.bound = "1";
+      const handler = (e) => { e.preventDefault(); e.stopPropagation(); closePopup(); };
+      btn.addEventListener("click", handler);
+      btn.addEventListener("pointerdown", handler);
+    })();
+
+    document.addEventListener("click", (event) => {
+      const t = event.target && event.target.closest ? event.target.closest('#modal-close') : null;
+      if (t) { event.preventDefault(); event.stopPropagation(); closePopup(); return; }
+      const modal = document.getElementById("artefact-modal");
+      if (modal && event.target === modal) closePopup();
+    }, true);
+
+    // Video preview — capture phase
+    document.addEventListener("click", (event) => {
+      const t = event.target && event.target.closest ? event.target.closest('#video-preview') : null;
+      if (t) { event.preventDefault(); event.stopPropagation(); playHumanInLoopVideo(event); }
+    }, true);
+
+    // CCCH9051 tabs
+    document.querySelectorAll("[data-ccch-tab]").forEach(btn =>
+      btn.addEventListener("click", () => switchCcchTab(btn.dataset.ccchTab))
+    );
+
+    // ============================================================
+    // Boot
+    // ============================================================
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+      renderGallery();
+      switchView(window.location.hash.slice(1) || "home", { replace: true });
+      initData();
+    });
+  </script>
+</body>
+</html>
